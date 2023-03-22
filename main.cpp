@@ -9,10 +9,8 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-   Control control("qrc:/main.qml");
-
-
-   control.show();
+   Control control;
+   control.qmlSetup("qrc:/main.qml");
 
 
     return app.exec();

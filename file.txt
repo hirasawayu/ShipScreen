@@ -1,3 +1,4 @@
-sentence 1
-sentence 2
-sentence 3
+1,100
+2,15
+3,30
+4,1000

@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QCoreApplication>
 #include <QDebug>
-#include <iostream>
 #include <QtQuick/QQuickView>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
@@ -14,14 +13,17 @@
 #include <QTimer>
 #include <QThread>
 
+#include "control.h"
+
 
 class GetFileData : public QObject
 {
     Q_OBJECT
 
 public:
-    GetFileData(QString fileName);
+    GetFileData();
     ~GetFileData();
+    void readFile(QString fileName);
     void timer();
     QTimer* qTimer;
 

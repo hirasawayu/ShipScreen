@@ -11,15 +11,20 @@
 #include <QGuiApplication>
 #include <QThread>
 
+#include "getfiledata.h"
+#include "managedata.h"
+
 class Control :  public QObject
 {
     Q_OBJECT
 public:
-    Control(QString const iQmlFile);
+    Control();
     ~Control();
 
-    void show() {qQmlWindow->show();}
-    void hide() {qQmlWindow->hide();}
+    void qmlSetup(QString const iQmlFile);
+    void show();
+    void hide();
+    void getDataSignal(QList<QString> settingGetData);
     void switchScreenQml(QString stateType);
     void reloadQml(QString objectName, int givenNum);
 
@@ -33,6 +38,8 @@ private slots:
     void onClickedButtonSlot(int buttonNum);
 
 private:
+       QList<QString> getData;
+       bool changeFlag = false;
 
 };
 
