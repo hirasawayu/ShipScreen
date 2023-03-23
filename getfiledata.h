@@ -23,11 +23,14 @@ class GetFileData : public QObject
 public:
     GetFileData();
     ~GetFileData();
-    void readFile(QString fileName);
+    bool readFile();
     void timer();
+    QList<QString> getLineData();
     QTimer* qTimer;
 
 private:
+    QList<QString> getData;
+
 
 
 };

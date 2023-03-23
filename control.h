@@ -24,9 +24,8 @@ public:
     void qmlSetup(QString const iQmlFile);
     void show();
     void hide();
-    void getDataSignal(QList<QString> settingGetData);
+    void getDataSignal();
     void switchScreenQml(QString stateType);
-    void reloadQml(QString objectName, int givenNum);
 
 protected:
     QQuickWindow* qQmlWindow;
@@ -38,8 +37,6 @@ private slots:
     void onClickedButtonSlot(int buttonNum);
 
 private:
-       QList<QString> getData;
-       bool changeFlag = false;
 
 };
 

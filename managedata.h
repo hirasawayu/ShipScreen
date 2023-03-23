@@ -17,8 +17,9 @@ class ManageData
 public:
     ManageData();
     ~ManageData();
-    bool setNumData(int dataType, int numData);
+    bool setNumData(int dataType, int numData, QString &objectName);
     void setStringData(int infoTypeNum, QString dataString, int importantInfoFlag);
+
 
 
 

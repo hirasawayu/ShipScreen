@@ -3,6 +3,8 @@
 //コンストラクタ
 GetFileData::GetFileData()
 {
+    QFile file("/home/hirasawayu/ShipScreen/file.txt");
+
 }
 
 //デストラクタ
@@ -10,25 +12,29 @@ GetFileData::~GetFileData()
 {
 }
 
-void GetFileData::readFile(QString fileName){
+bool GetFileData::readFile(){
 
-    QFile file(fileName);
+   QFile file("/home/hirasawayu/ShipScreen/file.txt");
     //
     if (! file.open(QIODevice::ReadOnly)) {
         QString errStr = "ファイル読み込みに失敗しました";
         qInfo() << errStr;
-        return;
+        return false;
     }
 
     QTextStream in(&file);
 
     int i = 0;
-    //ファイルを一行ずつ読み込む
-    while (! in.atEnd()){
+
+    if (in.atEnd()){
+        file.close();
+        return false;
+    }
 
         i++;
         //qInfo() << "Line " + QString::number(i) + " is Reading";
 
+        //ファイルを一行ずつ読み込む
         QString line = in.readLine();
         qInfo() << line;
 
@@ -36,28 +42,29 @@ void GetFileData::readFile(QString fileName){
         int start = 0;
         int pointer = 0;
         int j = 0;
-        QList<QString> getData = {};
+        getData = {};
 
         //データ形式
         //(データタイプ),(データ),(補助データ)
-        while (pointer != -1){
+        while (1){
 
             pointer++;
             //","でデータを区切る
             pointer = line.indexOf(",", pointer);
+            if(pointer == -1){
+                break;
+            }
             getData << line.mid(start, pointer - start);
             qInfo() << getData[j];
             j++;
             start = pointer + 1;
         }
 
-        Control control;
-        control.getDataSignal(getData);
-
         //タイマーを呼び出す
         timer();
-    }
-    file.close();
+
+        return true;
+
 }
 
 //タイマー
@@ -73,4 +80,10 @@ void GetFileData::timer(){
     qTimer->setTimerType(Qt::PreciseTimer);
     qTimer->start();
     */
+}
+
+//getDataを渡す
+QList<QString> GetFileData::getLineData(){
+
+    return getData;
 }

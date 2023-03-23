@@ -31,7 +31,9 @@ Window {
             color: "#ffffff"
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.top: parent.top
             anchors.bottom: parent.bottom
+            anchors.topMargin: 0
             anchors.leftMargin: 0
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
@@ -179,6 +181,69 @@ Window {
                 }
             }
 
+            Rectangle {
+                id: test
+                width: 600
+                height: 150
+                color: "#ffffff"
+                radius: 10
+                border.width: 5
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 50
+
+                Text {
+                    id: speedNumText
+                    width: 150
+                    height: 150
+                    objectName: "speedNum"
+                    text: "0"
+                    anchors.left: parent.left
+                    font.pixelSize: 40
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 0
+                }
+
+                Text {
+                    id: acDecelerationLevelText
+                    width: 150
+                    height: 150
+                    objectName: "acDecelerationLevel"
+                    text: "0"
+                    anchors.left: speedNumText.right
+                    font.pixelSize: 40
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 0
+                }
+
+                Text {
+                    id: directionDegreeNumText
+                    width: 150
+                    height: 150
+                    objectName: "directionDegreeNum"
+                    text: "0"
+                    anchors.left: acDecelerationLevelText.right
+                    font.pixelSize: 40
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 0
+                }
+
+                Text {
+                    id: remainingFuelLevelText
+                    width: 150
+                    height: 150
+                    objectName: "remainingFuelLevel"
+                    text: "0"
+                    anchors.left: directionDegreeNumText.right
+                    font.pixelSize: 40
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 0
+                }
+            }
         }
 
         //サブ画面１
@@ -414,6 +479,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2}D{i:12;invisible:true}D{i:16;invisible:true}D{i:20;invisible:true}
+    D{i:0}D{i:17;invisible:true}D{i:21;invisible:true}D{i:25;invisible:true}
 }
 ##^##*/

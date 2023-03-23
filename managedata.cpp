@@ -12,12 +12,14 @@ ManageData::~ManageData()
 
 
 
-bool ManageData::setNumData(int dataType, int settingNumData){
-    if (numData[dataType] != settingNumData){
-        numData[dataType] = settingNumData;
-        qInfo() << "numDataType: " << dataType << ", num " << numData[dataType];
+bool ManageData::setNumData(int dataType, int settingNumData, QString &objectName){
 
-        //データに変化があったらtrueを返す
+    //データに変化があったらQmlオブジェクトのプロパティを更新
+    if (numInfo[dataType].numData != settingNumData){
+        numInfo[dataType].numData = settingNumData;
+        qInfo() << "numDataType: " << dataType << ", num " << numInfo[dataType].numData;
+        objectName = numInfo[dataType].objectName;
+
         return true;
     }
 
@@ -36,5 +38,3 @@ void ManageData::setStringData(int settingInfoTypeNum, QString settingStringData
         emptyMessageInfoSpace = 0;
     }
 }
-
-

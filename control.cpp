@@ -14,17 +14,6 @@ Control::~Control()
 void Control::qmlSetup(QString const iQmlFile){
 
     const QUrl url(iQmlFile);
-    QString fileName = "/home/hirasawayu/ShipScreen/file.txt";
-
-
-    //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
-    GetFileData getFileData;
-    QThread *getFileDataThread = new QThread;
-    getFileData.moveToThread(getFileDataThread);
-    getFileDataThread->start();
-    getFileData.readFile(fileName);
-
-
 
     connect(&qQmlEngine, &QQmlApplicationEngine::objectCreated, this,
             [url](QObject *obj, const QUrl &objUrl)
@@ -34,13 +23,32 @@ void Control::qmlSetup(QString const iQmlFile){
 
     // Windowポインタを取得
     qQmlWindow = dynamic_cast<QQuickWindow*>(qQmlEngine.rootObjects().first());
-
-
     //画面ボタン押下のシグナルとスロットを結び付ける
     connect(qQmlWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
     //画面表示
     show();
+
+
+    //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
+
+    GetFileData getFileData;
+
+    QThread *getFileDataThread = new QThread;
+    getFileData.moveToThread(getFileDataThread);
+    getFileDataThread->start();
+
+    while(1) {
+    bool readFlag = getFileData.readFile();
+
+    if (readFlag == false){
+        break;
+    }
+
+    getDataSignal();
+    }
+
+
 }
 
 void Control::show(){
@@ -51,32 +59,38 @@ void Control::hide(){
     qQmlWindow->hide();
 }
 
-void Control::getDataSignal(QList<QString> settingGetData){
+void Control::getDataSignal(){
 
-    getData = settingGetData;
+    GetFileData getFileData;
+
+     QList<QString> getData = getFileData.getLineData();
+    QString objectName;
 
     ManageData manageData;
 
-    if (getData[0].toInt() >= 0 && getData[0].toInt() <= 4)
-        changeFlag = manageData.setNumData(getData[0].toInt(), getData[1].toInt());
+    if (getData[0].toInt() >= 0 && getData[0].toInt() <= 4){
+
+        bool changeFlag = manageData.setNumData(getData[0].toInt(), getData[1].toInt(), objectName);
+
+        if (changeFlag == true){
+
+            qInfo() << objectName;
+            qInfo() << getData[1];
+
+
+        //Qmlオブジェクトのプロパティを更新
+            QObject *rootObject = qQmlEngine.rootObjects().first();
+            QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
+        qmlObject->setProperty("text", getData[1]);
+        changeFlag = false;
+
+        }
+
+    }
+
     else if (getData[0].toInt() == 5){
         manageData.setStringData((getData[0].toInt()), getData[1], getData[2].toInt());
-        changeFlag = true;
     }
-
-    if (changeFlag == true){
-
-        //C++→QMLに変数を渡す
-        reloadQml()
-    }
-}
-
-//画面表示の更新
-void Control::reloadQml(QString objectName, int givenNum){
-    QObject *rootObject = qQmlEngine.rootObjects().first();
-    QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
-    qmlObject->setProperty("text", givenNum);
-
 }
 
 //画面ボタン押下時のスロットを定義
