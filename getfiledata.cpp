@@ -3,7 +3,6 @@
 //コンストラクタ
 GetFileData::GetFileData()
 {
-    QFile file("/home/hirasawayu/ShipScreen/file.txt");
 
 }
 
@@ -12,9 +11,9 @@ GetFileData::~GetFileData()
 {
 }
 
-bool GetFileData::readFile(){
+ bool GetFileData::readFile(QList<QString> &getData, int &loop){
 
-   QFile file("/home/hirasawayu/ShipScreen/file.txt");
+    QFile file("/home/hirasawayu/ShipScreen/file.txt");
     //
     if (! file.open(QIODevice::ReadOnly)) {
         QString errStr = "ファイル読み込みに失敗しました";
@@ -24,19 +23,29 @@ bool GetFileData::readFile(){
 
     QTextStream in(&file);
 
-    int i = 0;
+    while (1){
 
-    if (in.atEnd()){
-        file.close();
-        return false;
-    }
+        QString line;
+        bool loopOutFlag = false;
 
-        i++;
-        //qInfo() << "Line " + QString::number(i) + " is Reading";
+        //次の読み込み位置まで移動
+        for (int i = 0; i <= loop; i++){
 
-        //ファイルを一行ずつ読み込む
-        QString line = in.readLine();
+            //ファイルの最後ならループ終了
+            if(in.atEnd()){
+                loopOutFlag = true;
+                break;
+            }
+
+            //ファイルを一行ずつ読み込む
+            line = in.readLine();
+        }
+
+        if (loopOutFlag == true)
+            break;
+
         qInfo() << line;
+        loop++;
 
         //１行ごとに初期化
         int start = 0;
@@ -46,14 +55,11 @@ bool GetFileData::readFile(){
 
         //データ形式
         //(データタイプ),(データ),(補助データ)
-        while (1){
+        while (pointer != -1){
 
             pointer++;
             //","でデータを区切る
             pointer = line.indexOf(",", pointer);
-            if(pointer == -1){
-                break;
-            }
             getData << line.mid(start, pointer - start);
             qInfo() << getData[j];
             j++;
@@ -65,6 +71,10 @@ bool GetFileData::readFile(){
 
         return true;
 
+    }
+    file.close();
+
+    return false;
 }
 
 //タイマー
@@ -82,8 +92,9 @@ void GetFileData::timer(){
     */
 }
 
+/*
 //getDataを渡す
 QList<QString> GetFileData::getLineData(){
 
-    return getData;
 }
+*/

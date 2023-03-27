@@ -11,59 +11,55 @@ Control::~Control()
 }
 
 //QMLファイルとの連携をセットアップ
-void Control::qmlSetup(QString const iQmlFile){
+void Control::qmlSetup(){
 
-    const QUrl url(iQmlFile);
-
-    connect(&qQmlEngine, &QQmlApplicationEngine::objectCreated, this,
-            [url](QObject *obj, const QUrl &objUrl)
-    {
-    }, Qt::QueuedConnection);
-    qQmlEngine.load(url);
-
+    mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     // Windowポインタを取得
-    qQmlWindow = dynamic_cast<QQuickWindow*>(qQmlEngine.rootObjects().first());
+    mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
     //画面ボタン押下のシグナルとスロットを結び付ける
-    connect(qQmlWindow, SIGNAL(onClickedButtonSignal(int)),
+    connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
-    //画面表示
-    show();
-
 
     //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
-
-    GetFileData getFileData;
-
+    GetFileData *getFileData = new GetFileData;
     QThread *getFileDataThread = new QThread;
-    getFileData.moveToThread(getFileDataThread);
+    getFileData->moveToThread(getFileDataThread);
     getFileDataThread->start();
 
-    while(1) {
-    bool readFlag = getFileData.readFile();
+    QList<QString> getData = {};
+    int loop = 0;
 
-    if (readFlag == false){
-        break;
+    while(1){
+        bool result = getFileData->readFile(getData, loop);
+
+        qInfo() << result;
+
+        if(result == false){
+            break;
+        }
+
+        onPropertyChangedSlot(getData);
+
+        //画面表示
+        show();
     }
-
-    getDataSignal();
-    }
-
-
 }
 
 void Control::show(){
-    qQmlWindow->show();
+    mainWindow->show();
 }
 
 void Control::hide(){
-    qQmlWindow->hide();
+    mainWindow->hide();
 }
 
-void Control::getDataSignal(){
+//データ変化時のスロット処理を定義
+void Control::onPropertyChangedSlot(QList<QString> getData){
 
-    GetFileData getFileData;
+    qInfo() << "Slot Catch";
 
-     QList<QString> getData = getFileData.getLineData();
+    //QList<QString> getData = getFileData.getLineData();
+    qInfo() << getData[0];
     QString objectName;
 
     ManageData manageData;
@@ -77,12 +73,11 @@ void Control::getDataSignal(){
             qInfo() << objectName;
             qInfo() << getData[1];
 
-
-        //Qmlオブジェクトのプロパティを更新
-            QObject *rootObject = qQmlEngine.rootObjects().first();
+            //Qmlオブジェクトのプロパティを更新
+            QObject *rootObject = mainEngine.rootObjects().first();
             QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
-        qmlObject->setProperty("text", getData[1]);
-        changeFlag = false;
+            qmlObject->setProperty("text", getData[1]);
+            changeFlag = false;
 
         }
 
@@ -102,15 +97,15 @@ void Control::onClickedButtonSlot(int buttonNum){
     case 0:
         switchScreenQml("state0");
         break;
-    //サブ画面１へ切替
+        //サブ画面１へ切替
     case 1:
         switchScreenQml("state1");
         break;
-    //サブ画面２へ切替
+        //サブ画面２へ切替
     case 2:
         switchScreenQml("state2");
         break;
-    //サブ画面３へ切替
+        //サブ画面３へ切替
     case 3:
         switchScreenQml("state3");
         break;
@@ -119,7 +114,7 @@ void Control::onClickedButtonSlot(int buttonNum){
 
 //画面状態切替処理
 void Control::switchScreenQml(QString stateType){
-    QObject *rootObject = qQmlEngine.rootObjects().first();
+    QObject *rootObject = mainEngine.rootObjects().first();
     QObject *qmlObject = rootObject->findChild<QObject*>("obWindow");
     qmlObject->setProperty("state" , stateType);
 }

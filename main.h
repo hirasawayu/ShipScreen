@@ -11,7 +11,11 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QGuiApplication>
+#include <QThread>
+
 #include "control.h"
+#include "getfiledata.h"
+#include "managedata.h"
 
 int main(int argc, char *argv[]);
 

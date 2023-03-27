@@ -21,20 +21,24 @@ public:
     Control();
     ~Control();
 
-    void qmlSetup(QString const iQmlFile);
+    void qmlSetup();
+    void onPropertyChangedSlot(QList<QString> getData);
     void show();
     void hide();
-    void getDataSignal();
     void switchScreenQml(QString stateType);
 
 protected:
-    QQuickWindow* qQmlWindow;
-    QQmlApplicationEngine qQmlEngine;
+    QQmlApplicationEngine mainEngine;
+    QQuickWindow* mainWindow;
+
+    QQmlApplicationEngine signalHandleEngine;
+    QQuickWindow* signalHandleWindow;
 
 signals:
 
 private slots:
     void onClickedButtonSlot(int buttonNum);
+
 
 private:
 
