@@ -21,18 +21,12 @@ public:
     Control();
     ~Control();
 
-    void qmlSetup();
+    void initialSetup();
+    void controller();
     void onPropertyChangedSlot(QList<QString> getData);
     void show();
     void hide();
     void switchScreenQml(QString stateType);
-
-protected:
-    QQmlApplicationEngine mainEngine;
-    QQuickWindow* mainWindow;
-
-    QQmlApplicationEngine signalHandleEngine;
-    QQuickWindow* signalHandleWindow;
 
 signals:
 
@@ -41,6 +35,8 @@ private slots:
 
 
 private:
+    QQmlApplicationEngine mainEngine;
+    QQuickWindow* mainWindow;
 
 };
 

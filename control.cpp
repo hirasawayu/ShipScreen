@@ -2,7 +2,11 @@
 
 //コンストラクタ
 Control::Control()
-{
+{ 
+    mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    // Windowポインタを取得
+    mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
+
 }
 
 //デストラクタ
@@ -10,27 +14,38 @@ Control::~Control()
 {
 }
 
-//QMLファイルとの連携をセットアップ
-void Control::qmlSetup(){
+void Control::initialSetup(){
 
+    /*
     mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     // Windowポインタを取得
     mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
+    */
+
+    //画面表示
+    show();
+}
+
+//QMLファイルとの連携をセットアップ
+void Control::controller(){
+
+    /*
+    mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    // Windowポインタを取得
+    mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
+    */
+
     //画面ボタン押下のシグナルとスロットを結び付ける
     connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
 
-    //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
-    GetFileData *getFileData = new GetFileData;
-    QThread *getFileDataThread = new QThread;
-    getFileData->moveToThread(getFileDataThread);
-    getFileDataThread->start();
+    GetFileData getFileData;
 
     QList<QString> getData = {};
     int loop = 0;
 
     while(1){
-        bool result = getFileData->readFile(getData, loop);
+        bool result = getFileData.readFile(getData, loop);
 
         qInfo() << result;
 
@@ -39,9 +54,6 @@ void Control::qmlSetup(){
         }
 
         onPropertyChangedSlot(getData);
-
-        //画面表示
-        show();
     }
 }
 

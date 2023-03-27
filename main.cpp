@@ -9,11 +9,20 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-   Control control;
+   //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
+   Control *initialControl = new Control;
+   QThread *initialThread = new QThread;
+   initialControl->moveToThread(initialThread);
+   initialThread->start();
 
-   control.qmlSetup();
+   initialControl->initialSetup();
 
-   app.exec();
+   Control *control = new Control;
+   QThread *controlThread = new QThread;
+   control->moveToThread(controlThread);
+   controlThread->start();
 
-    return 0;
+   control->controller();
+
+    return app.exec();
 }
