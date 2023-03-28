@@ -1,9 +1,14 @@
 #include "getfiledata.h"
+#include "control.h"
 
 //コンストラクタ
 GetFileData::GetFileData()
 {
-
+    //タイマーを設定
+    timer = new QTimer;
+    //1秒ごとにreadFileを呼び出す
+    connect(timer, SIGNAL(timeout()), this, SLOT(readFile()));
+    timer->start(1000);
 }
 
 //デストラクタ
@@ -11,14 +16,17 @@ GetFileData::~GetFileData()
 {
 }
 
- bool GetFileData::readFile(QList<QString> &getData, int &loop){
+void GetFileData::readFile(){
 
     QFile file("/home/hirasawayu/ShipScreen/file.txt");
+    Control *control = new Control;
     //
     if (! file.open(QIODevice::ReadOnly)) {
         QString errStr = "ファイル読み込みに失敗しました";
         qInfo() << errStr;
-        return false;
+
+        delete timer;
+        return;
     }
 
     QTextStream in(&file);
@@ -66,35 +74,11 @@ GetFileData::~GetFileData()
             start = pointer + 1;
         }
 
-        //タイマーを呼び出す
-        timer();
-
-        return true;
-
+        control->onPropertyChangedSlot(getData);
+        return;
     }
     file.close();
 
-    return false;
+    delete timer;
+    return;
 }
-
-//タイマー
-void GetFileData::timer(){
-
-    //１秒ごとに１行のデータを取得
-    QThread::sleep(1);
-
-    //ボツ
-    /*
-    qTimer = new QTimer();
-    qTimer->setInterval(1000);
-    qTimer->setTimerType(Qt::PreciseTimer);
-    qTimer->start();
-    */
-}
-
-/*
-//getDataを渡す
-QList<QString> GetFileData::getLineData(){
-
-}
-*/

@@ -23,16 +23,15 @@ class GetFileData : public QObject
 public:
     GetFileData();
     ~GetFileData();
-    bool readFile(QList<QString> &getData, int &loop);
-    void timer();
     //QList<QString> getLineData();
-    QTimer* qTimer;
+    QTimer *timer;
+
+private slots:
+        void readFile();
 
 private:
     QList<QString> getData;
-
-    //QQmlApplicationEngine signalEngine;
-
+    int loop = 0;
 
 
 };

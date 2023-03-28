@@ -39,22 +39,7 @@ void Control::controller(){
     connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
 
-    GetFileData getFileData;
-
-    QList<QString> getData = {};
-    int loop = 0;
-
-    while(1){
-        bool result = getFileData.readFile(getData, loop);
-
-        qInfo() << result;
-
-        if(result == false){
-            break;
-        }
-
-        onPropertyChangedSlot(getData);
-    }
+    GetFileData *getFileData = new GetFileData;
 }
 
 void Control::show(){
@@ -90,6 +75,7 @@ void Control::onPropertyChangedSlot(QList<QString> getData){
             QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
             qmlObject->setProperty("text", getData[1]);
             changeFlag = false;
+            qInfo() << "DataSetting";
 
         }
 
