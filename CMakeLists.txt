@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         getfiledata.cpp
         managedata.h
         managedata.cpp
+        stringdata.h
+        stringdata.cpp
         qml.qrc
         file.txt
 )

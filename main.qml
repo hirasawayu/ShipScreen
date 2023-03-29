@@ -91,6 +91,7 @@ Window {
                 id: toSubScreen2Button
                 width: 200
                 height: 150
+                visible: true
                 color: "#ffffff"
                 radius: 10
                 border.color: "#fc000000"
@@ -251,6 +252,7 @@ Window {
             id: subScreen1
             visible: false
             color: "#ffffff"
+            border.width: 0
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
@@ -262,7 +264,7 @@ Window {
 
             Rectangle {
                 id: backButtonSub1
-                width: 100
+                width: 150
                 height: 50
                 visible: true
                 color: "#ffffff"
@@ -274,7 +276,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: "\u2190 1"
+                    text: qsTr("← 戻る")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -308,10 +310,6 @@ Window {
             }
 
 
-
-
-
-
         }
 
         //サブ画面２
@@ -330,8 +328,9 @@ Window {
 
             Rectangle {
                 id: backButtonSub2
-                width: 100
+                width: 150
                 height: 50
+                visible: true
                 color: "#ffffff"
                 radius: 10
                 border.width: 5
@@ -341,7 +340,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: "\u2190 2"
+                    text: qsTr("← 戻る")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -373,6 +372,197 @@ Window {
                     }
                 }
             }
+
+            Rectangle {
+                id: showWeatherConditionInfoArea
+                height: 230
+                color: "#ffffff"
+                radius: 10
+                border.width: 3
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.rightMargin: 20
+                anchors.leftMargin: 20
+                anchors.topMargin: 100
+
+                Text {
+                    width: 200
+                    height: 30
+                    color: "#0008ff"
+                    text: qsTr("～天候情報～")
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: 25
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.italic: false
+                    font.bold: true
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showWeatherConditionInfoText1
+                    height: 30
+                    text: qsTr("現在情報はありません。")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 50
+                }
+
+                Text {
+                    id: showWeatherConditionInfoText2
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showWeatherConditionInfoText1.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showWeatherConditionInfoText3
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showWeatherConditionInfoText2.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showWeatherConditionInfoText4
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showWeatherConditionInfoText3.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+            }
+
+            Rectangle {
+                id: showMarineConditionInfoArea
+                height: 230
+                color: "#ffffff"
+                radius: 10
+                border.width: 3
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: showWeatherConditionInfoArea.bottom
+                anchors.rightMargin: 20
+                anchors.leftMargin: 20
+                anchors.topMargin: 20
+
+                Text {
+                    width: 200
+                    height: 30
+                    color: "#0008ff"
+                    text: qsTr("～海上情報～")
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: 25
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.italic: false
+                    font.bold: true
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showMarineConditionInfoText1
+                    height: 30
+                    text: qsTr("現在情報はありません。")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 50
+                }
+
+                Text {
+                    id: showMarineConditionInfoText2
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showMarineConditionInfoText1.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showMarineConditionInfoText3
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showMarineConditionInfoText2.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: showMarineConditionInfoText4
+                    height: 30
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: showMarineConditionInfoText3.bottom
+                    font.pixelSize: 25
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 10
+                }
+            }
+
+            Text {
+                id: text1
+                height: 60
+                color: "#0008ff"
+                text: qsTr("天候・海上情報")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                font.pixelSize: 50
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                font.italic: true
+                font.bold: true
+                font.family: "Times New Roman"
+                anchors.rightMargin: 20
+                anchors.leftMargin: 250
+                anchors.topMargin: 20
+            }
         }
 
         //サブ画面３
@@ -392,7 +582,7 @@ Window {
 
             Rectangle {
                 id: backButtonSub3
-                width: 100
+                width: 150
                 height: 50
                 color: "#ffffff"
                 radius: 10
@@ -403,7 +593,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: "\u2190 3"
+                    text: qsTr("← 戻る")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -479,6 +669,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:17;invisible:true}D{i:21;invisible:true}D{i:25;invisible:true}
+    D{i:0}D{i:2;invisible:true}D{i:17;invisible:true}D{i:27}D{i:37}D{i:38;invisible:true}
 }
 ##^##*/

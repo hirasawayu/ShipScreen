@@ -13,8 +13,6 @@
 #include <QTimer>
 #include <QThread>
 
-#include "control.h"
-
 
 class GetFileData : public QObject
 {
@@ -23,16 +21,16 @@ class GetFileData : public QObject
 public:
     GetFileData();
     ~GetFileData();
+    bool readFile(QList<QString> &getData, int &loop);
     //QList<QString> getLineData();
-    QTimer *timer;
+
+signals:
+    void onPropertyChangedSignal();
 
 private slots:
-        void readFile();
 
 private:
-    QList<QString> getData;
-    int loop = 0;
-
+    QTimer *timer;
 
 };
 

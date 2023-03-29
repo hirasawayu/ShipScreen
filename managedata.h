@@ -12,13 +12,14 @@
 #include <QTextStream>
 
 
-class ManageData
+class ManageData : public QObject
 {
 public:
     ManageData();
     ~ManageData();
-    bool setNumData(int dataType, int numData, QString &objectName);
-    void setStringData(int infoTypeNum, QString dataString, int importantInfoFlag);
+    void setNumData(int settingNumData, QString &objectName, int i);
+    //bool setNumData(int dataType, int numData, QString &objectName);
+    int setStringData(int settingInfoTypeNum, int settingInfoDetailNum, int settingImportantInfoFlag);
 
 
 
@@ -30,6 +31,12 @@ private slots:
 private:
 
     //数値用の構造体
+    int numData[4] = {0};
+    QList<QString> objectNames = {"speedNum", "acDecelerationLevel", "directionDegreeNum", "remainingFuelLevel"};
+
+
+    //旧バージョン
+    /*
     struct NumInfo
     {
         int numData;
@@ -42,6 +49,7 @@ private:
         {0, "directionDegreeNum"},
         {0, "remainingFuelLevel"}
     };
+    */
 
     /*
      * [0]speedNum
@@ -57,18 +65,14 @@ private:
     struct MessageInfo
     {
     int infoTypeNum;
-    QString stringData;
+    int infoDetailNum;
     int importantInfoFlag;
     };
 
     MessageInfo messageInfo[30];
 
     //messageInfoの何番目の要素にデータを格納するかを指定する
-    int emptyMessageInfoSpace = 0;
-
-
-
-
+    int emptyMessageInfoPlace = 0;
 };
 
 #endif // MANAGEDATA_H

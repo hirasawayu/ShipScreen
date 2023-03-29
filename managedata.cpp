@@ -11,8 +11,23 @@ ManageData::~ManageData()
 }
 
 
+void ManageData::setNumData(int settingNumData, QString &objectName, int i){
 
+    if(numData[i] != settingNumData){
+        numData[i] = settingNumData;
+        objectName = objectNames[i];
+
+        qInfo() << objectName << " is changed to " << numData[i];
+    }
+}
+
+//旧バージョン
+/*
 bool ManageData::setNumData(int dataType, int settingNumData, QString &objectName){
+
+    for (int i = 0; i < 4; i++){
+        numData[i] = settingNumData;
+    }
 
     //データに変化があったらQmlオブジェクトのプロパティを更新
     if (numInfo[dataType].numData != settingNumData){
@@ -26,15 +41,19 @@ bool ManageData::setNumData(int dataType, int settingNumData, QString &objectNam
     else
         return false;
 }
+*/
 
-void ManageData::setStringData(int settingInfoTypeNum, QString settingStringData, int settingImportantInfoFlag){
-    messageInfo[emptyMessageInfoSpace].infoTypeNum = settingInfoTypeNum;
-    messageInfo[emptyMessageInfoSpace].stringData = settingStringData;
-    messageInfo[emptyMessageInfoSpace].importantInfoFlag = settingImportantInfoFlag;
+int ManageData::setStringData(int settingInfoTypeNum, int settingInfoDetailNum, int settingImportantInfoFlag){
+    messageInfo[emptyMessageInfoPlace].infoTypeNum = settingInfoTypeNum;
+    messageInfo[emptyMessageInfoPlace].infoDetailNum = settingInfoDetailNum;
+    messageInfo[emptyMessageInfoPlace].importantInfoFlag = settingImportantInfoFlag;
 
-    emptyMessageInfoSpace++;
+    emptyMessageInfoPlace++;
     //全ての要素にデータが入ったら[0]要素目から上書き
-    if(emptyMessageInfoSpace == 30){
-        emptyMessageInfoSpace = 0;
+    if(emptyMessageInfoPlace == 10){
+        emptyMessageInfoPlace = 0;
     }
+
+    //データを入れた要素の値を返す
+    return emptyMessageInfoPlace - 1;
 }

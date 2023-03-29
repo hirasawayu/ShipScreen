@@ -4,26 +4,23 @@
 Control::Control()
 { 
     mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    // Windowポインタを取得
+    //Windowポインタを取得
     mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
+    //Windowオブジェクトを取得
+    rootObject = mainEngine.rootObjects().first();
+
+    //画面ボタン押下のシグナルとスロットを結び付ける
+    connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
+            this, SLOT(onClickedButtonSlot(int)));
+
+    //データ受け取り時のシグナルとスロットを結び付ける
+    connect(&getFileData, &GetFileData::onPropertyChangedSignal, this, &Control::onPropertyChangedSlot);
 
 }
 
 //デストラクタ
 Control::~Control()
 {
-}
-
-void Control::initialSetup(){
-
-    /*
-    mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    // Windowポインタを取得
-    mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
-    */
-
-    //画面表示
-    show();
 }
 
 //QMLファイルとの連携をセットアップ
@@ -34,12 +31,6 @@ void Control::controller(){
     // Windowポインタを取得
     mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
     */
-
-    //画面ボタン押下のシグナルとスロットを結び付ける
-    connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
-            this, SLOT(onClickedButtonSlot(int)));
-
-    GetFileData *getFileData = new GetFileData;
 }
 
 void Control::show(){
@@ -50,40 +41,43 @@ void Control::hide(){
     mainWindow->hide();
 }
 
+void Control::qmlSetProperty(QString objectName, QString data){
+
+    //QmlオブジェクトのTextプロパティを更新
+    QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
+    qmlObject->setProperty("text", data);
+
+}
+
 //データ変化時のスロット処理を定義
-void Control::onPropertyChangedSlot(QList<QString> getData){
+void Control::onPropertyChangedSlot(){
 
-    qInfo() << "Slot Catch";
-
-    //QList<QString> getData = getFileData.getLineData();
-    qInfo() << getData[0];
     QString objectName;
+    int count = 0;
 
-    ManageData manageData;
+    bool getDataFlag = getFileData.readFile(getData, loop);
 
-    if (getData[0].toInt() >= 0 && getData[0].toInt() <= 4){
-
-        bool changeFlag = manageData.setNumData(getData[0].toInt(), getData[1].toInt(), objectName);
-
-        if (changeFlag == true){
-
-            qInfo() << objectName;
-            qInfo() << getData[1];
-
-            //Qmlオブジェクトのプロパティを更新
-            QObject *rootObject = mainEngine.rootObjects().first();
-            QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
-            qmlObject->setProperty("text", getData[1]);
-            changeFlag = false;
-            qInfo() << "DataSetting";
-
-        }
-
+    if (getDataFlag == false){
+        qInfo() << "No Data";
+        return;
     }
 
-    else if (getData[0].toInt() == 5){
-        manageData.setStringData((getData[0].toInt()), getData[1], getData[2].toInt());
+    for (count = 0; count < 4; count++){
+
+        manageData.setNumData(getData[count].toInt(), objectName, count);
+
+        qmlSetProperty(objectName, getData[count]);
+
+
+        //画面表示
+        show();
     }
+
+
+
+    int messageInfoPlace = manageData.setStringData((getData[count].toInt()), getData[count+1].toInt(), getData[count+2].toInt());
+
+    qInfo() << "messageInfoSpace: " << messageInfoPlace;
 }
 
 //画面ボタン押下時のスロットを定義

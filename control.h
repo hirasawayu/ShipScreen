@@ -13,6 +13,7 @@
 
 #include "getfiledata.h"
 #include "managedata.h"
+#include "stringdata.h"
 
 class Control :  public QObject
 {
@@ -21,23 +22,28 @@ public:
     Control();
     ~Control();
 
-    void initialSetup();
     void controller();
-    void onPropertyChangedSlot(QList<QString> getData);
     void show();
     void hide();
+    void qmlSetProperty(QString objectName, QString data);
     void switchScreenQml(QString stateType);
 
 signals:
 
 private slots:
+    void onPropertyChangedSlot();
     void onClickedButtonSlot(int buttonNum);
 
 
 private:
     QQmlApplicationEngine mainEngine;
     QQuickWindow* mainWindow;
+    QObject *rootObject;
 
+    ManageData manageData;
+    GetFileData getFileData;
+    QList<QString> getData;
+    int loop = 0;
 };
 
 #endif // CONTROL_H
