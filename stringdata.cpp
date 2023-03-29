@@ -6,5 +6,7 @@ StringData::StringData(){
 StringData::~StringData(){
 }
 
-QString StringData::getStringData(QString listType, QString stringType)
-{}
+QString StringData::getStringData(int listType, int stringType){
+
+    return stringData[listType][stringType];
+}

@@ -42,6 +42,7 @@ private:
 
     ManageData manageData;
     GetFileData getFileData;
+    StringData stringData;
     QList<QString> getData;
     int loop = 0;
 };

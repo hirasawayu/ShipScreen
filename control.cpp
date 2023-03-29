@@ -75,7 +75,9 @@ void Control::onPropertyChangedSlot(){
 
 
 
-    int messageInfoPlace = manageData.setStringData((getData[count].toInt()), getData[count+1].toInt(), getData[count+2].toInt());
+    int messageInfoPlace = manageData.setStringData(getData[count].toInt(), getData[count+1].toInt(), getData[count+2].toInt());
+
+    QString messageString = stringData.getStringData(getData[count].toInt(), getData[count+1].toInt());
 
     qInfo() << "messageInfoSpace: " << messageInfoPlace;
 }

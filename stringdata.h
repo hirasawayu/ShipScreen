@@ -9,7 +9,7 @@ class StringData : public QObject
 public:
     StringData();
     ~StringData();
-    QString getStringData(QString listType, QString stringType);
+    QString getStringData(int listType, int stringType);
 
 private:
     QList<QList<QString>> stringData = {
