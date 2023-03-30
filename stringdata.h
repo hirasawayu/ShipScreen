@@ -9,44 +9,44 @@ class StringData : public QObject
 public:
     StringData();
     ~StringData();
-    QString getStringData(int listType, int stringType);
+    void getNumString(int numType, QString &numString, QString &numObjectName);
+    void getStringInfo(int stringType, QString &stringInfoString, QString &stringObjectName);
+    QString getDetailInfo(int detailInfoNum);
 
 private:
-    QList<QList<QString>> stringData = {
-        numList,
-        infoTypeList,
-        infoDetailList
+
+    struct NumInfoList
+    {
+        QString numString;
+        QString numObjectName;
     };
 
-    QList<QString> numList = {
-        " km/h",
-        " km/h²",
-        " °",
-        ""
+    NumInfoList numInfoList[4] = {
+        {" km/h", "speedNum"},
+        {" km/h²", "acDecelerationLevel"},
+        {" °", "directionDegreeNum"},
+        {"", "remainingFuelLevel"}
     };
 
-    QList<QString> infoTypeList = {
-        "台風警報: ",
-        "波浪警報: ",
-        "海上事故警報: "
+    struct StringInfoList
+    {
+        QString stringInfoString;
+        QString stringObjectName;
     };
 
-    QList<QString> infoDetailList = {
+    StringInfoList stringInfoList[4] = {
+        {"天候情報: ", "showWeatherConditionInfoText"},
+        {"台風警報: ", "showMarineConditionInfoText"},
+        {"波浪警報: ", "showMarineConditionInfoText"},
+        {"海上事故警報: ", "showMarineConditionInfoText"}
+    };
+
+    QList<QString> detailInfoList = {
+        "晴れのち曇り/降水確率２０％",
         "午後６時頃から台風接近による強風・高波が見込まれます。",
         "東京湾沖にて１０ｍの高波が発生しています。",
         "付近の海上にて船舶事故が発生しています。注意して進行してください。"
     };
-
-
-
-
-    /*
-     * [0]speedNum
-     * [1]acDecelerationLevel;
-     * [2]DirectionDegreeNum
-     * [3]remainingFuelLevel
-     * [4]
-    */
 };
 
 #endif // STRINGDATA_H

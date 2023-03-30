@@ -49,10 +49,16 @@ void Control::qmlSetProperty(QString objectName, QString data){
 
 }
 
+void Control::addListData(QString listData){
+
+    QObject *qmlObject = rootObject->findChild<QObject*>("infoModel");
+    qmlObject->setProperty("listDataString", listData);
+
+}
+
 //データ変化時のスロット処理を定義
 void Control::onPropertyChangedSlot(){
 
-    QString objectName;
     int count = 0;
 
     bool getDataFlag = getFileData.readFile(getData, loop);
@@ -64,22 +70,39 @@ void Control::onPropertyChangedSlot(){
 
     for (count = 0; count < 4; count++){
 
-        manageData.setNumData(getData[count].toInt(), objectName, count);
+        //
+        QString numString;
+        QString numObjectName;
 
-        qmlSetProperty(objectName, getData[count]);
+        manageData.setNumData(getData[count].toInt(), count);
+        stringData.getNumString(count, numString, numObjectName);
+
+        numString = getData[count] + numString;
+
+        qmlSetProperty(numObjectName, numString);
 
 
         //画面表示
         show();
     }
 
+    QString stringInfoString;
+    QString stringObjectName;
+    QString detailInfoString;
 
+    //ManageDataクラスに表示データを保存、および表示位置の値を取得
+    int infoPosition = manageData.setStringData(getData[count].toInt(), getData[count+1].toInt(), getData[count+2].toInt());
 
-    int messageInfoPlace = manageData.setStringData(getData[count].toInt(), getData[count+1].toInt(), getData[count+2].toInt());
+    //オブジェクト名と表示する文字列を取得
+    stringData.getStringInfo(getData[count].toInt(), stringInfoString, stringObjectName);
+    detailInfoString = stringData.getDetailInfo(getData[count+1].toInt());
 
-    QString messageString = stringData.getStringData(getData[count].toInt(), getData[count+1].toInt());
+    //例：　"weatherConditionInfoText" + "1"
+    stringObjectName = stringObjectName + QString::number(infoPosition);
+    stringInfoString = stringInfoString + detailInfoString;
+    qmlSetProperty(stringObjectName, stringInfoString);
 
-    qInfo() << "messageInfoSpace: " << messageInfoPlace;
+    addListData(stringInfoString);
 }
 
 //画面ボタン押下時のスロットを定義

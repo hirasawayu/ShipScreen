@@ -250,7 +250,7 @@ Window {
         //サブ画面１
         Rectangle {
             id: subScreen1
-            visible: false
+            visible: true
             color: "#ffffff"
             border.width: 0
             anchors.left: parent.left
@@ -307,6 +307,23 @@ Window {
                         onClickedButtonSignal(0);
                     }
                 }
+            }
+
+            Rectangle {
+                id: rectangle2
+                width: 200
+                height: 200
+                color: "#ffffff"
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottomMargin: 20
+
+                Image {
+                                id: shipImage
+                                anchors.fill: parent
+                                width: 500; height: 500
+                                source: "shipImage.jpg"
+                            }
             }
 
 
@@ -404,6 +421,7 @@ Window {
 
                 Text {
                     id: showWeatherConditionInfoText1
+                    objectName: "showWeatherConditionInfoText1"
                     height: 30
                     text: qsTr("現在情報はありません。")
                     anchors.left: parent.left
@@ -418,6 +436,7 @@ Window {
 
                 Text {
                     id: showWeatherConditionInfoText2
+                    objectName: "showWeatherConditionInfoText2"
                     height: 30
                     text: qsTr("")
                     anchors.left: parent.left
@@ -432,6 +451,7 @@ Window {
 
                 Text {
                     id: showWeatherConditionInfoText3
+                    objectName: "showWeatherConditionInfoText3"
                     height: 30
                     text: qsTr("")
                     anchors.left: parent.left
@@ -446,7 +466,9 @@ Window {
 
                 Text {
                     id: showWeatherConditionInfoText4
+                    objectName: "showWeatherConditionInfoText4"
                     height: 30
+                    visible: true
                     text: qsTr("")
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -490,6 +512,7 @@ Window {
 
                 Text {
                     id: showMarineConditionInfoText1
+                    objectName: "showMarineConditionInfoText1"
                     height: 30
                     text: qsTr("現在情報はありません。")
                     anchors.left: parent.left
@@ -504,6 +527,7 @@ Window {
 
                 Text {
                     id: showMarineConditionInfoText2
+                    objectName: "showMarineConditionInfoText2"
                     height: 30
                     text: qsTr("")
                     anchors.left: parent.left
@@ -518,6 +542,7 @@ Window {
 
                 Text {
                     id: showMarineConditionInfoText3
+                    objectName: "showMarineConditionInfoText3"
                     height: 30
                     text: qsTr("")
                     anchors.left: parent.left
@@ -532,6 +557,7 @@ Window {
 
                 Text {
                     id: showMarineConditionInfoText4
+                    objectName: "showMarineConditionInfoText4"
                     height: 30
                     text: qsTr("")
                     anchors.left: parent.left
@@ -625,6 +651,50 @@ Window {
                     }
                 }
             }
+
+            Rectangle {
+                id: rectangle
+                width: 500
+                height: 200
+                color: "#ffffff"
+                radius: 5
+                border.width: 5
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: 50
+                anchors.topMargin: 350
+
+                ListModel {
+
+                    property string listDataString
+                    id: infoModel
+                    objectName: "infoModel"
+                    //listDataString更新時にListElementを追加
+                    onListDataStringChanged: infoModel.append({"name": listDataString})
+
+                }
+
+                Component{
+                    id: infoDelegate
+                    Text{
+                        text: model.name
+                        font.pixelSize: 10
+                    }
+                }
+
+                ListView{
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: 10
+                    anchors.leftMargin: 10
+                    model: infoModel
+                    delegate: infoDelegate
+                    clip: true
+
+                }
+            }
         }
 
         //画面状態切替
@@ -669,6 +739,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2;invisible:true}D{i:17;invisible:true}D{i:27}D{i:37}D{i:38;invisible:true}
+    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}D{i:17;invisible:true}
 }
 ##^##*/

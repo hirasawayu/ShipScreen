@@ -26,9 +26,11 @@ public:
     void show();
     void hide();
     void qmlSetProperty(QString objectName, QString data);
+    void addListData(QString stringInfooString);
     void switchScreenQml(QString stateType);
 
 signals:
+
 
 private slots:
     void onPropertyChangedSlot();

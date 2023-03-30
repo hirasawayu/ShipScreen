@@ -25,6 +25,7 @@ set(PROJECT_SOURCES
         stringdata.cpp
         qml.qrc
         file.txt
+        shipImage.jpg
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

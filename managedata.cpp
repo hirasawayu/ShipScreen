@@ -11,13 +11,13 @@ ManageData::~ManageData()
 }
 
 
-void ManageData::setNumData(int settingNumData, QString &objectName, int i){
+void ManageData::setNumData(int settingNumData, int i){
 
     if(numData[i] != settingNumData){
         numData[i] = settingNumData;
-        objectName = objectNames[i];
+        //numObjectName = objectNames[i];
 
-        qInfo() << objectName << " is changed to " << numData[i];
+        //qInfoinfo() << objectName << " is changed to " << numData[i];
     }
 }
 
@@ -44,16 +44,30 @@ bool ManageData::setNumData(int dataType, int settingNumData, QString &objectNam
 */
 
 int ManageData::setStringData(int settingInfoTypeNum, int settingInfoDetailNum, int settingImportantInfoFlag){
-    messageInfo[emptyMessageInfoPlace].infoTypeNum = settingInfoTypeNum;
-    messageInfo[emptyMessageInfoPlace].infoDetailNum = settingInfoDetailNum;
-    messageInfo[emptyMessageInfoPlace].importantInfoFlag = settingImportantInfoFlag;
+    messageInfo[emptyMessageInfoPosition].infoTypeNum = settingInfoTypeNum;
+    messageInfo[emptyMessageInfoPosition].infoDetailNum = settingInfoDetailNum;
+    messageInfo[emptyMessageInfoPosition].importantInfoFlag = settingImportantInfoFlag;
 
-    emptyMessageInfoPlace++;
+    qInfo() << "messageInfoPosition: " << emptyMessageInfoPosition;
+
+    emptyMessageInfoPosition++;
     //全ての要素にデータが入ったら[0]要素目から上書き
-    if(emptyMessageInfoPlace == 10){
-        emptyMessageInfoPlace = 0;
+    if(emptyMessageInfoPosition == 10){
+        emptyMessageInfoPosition = 0;
     }
 
-    //データを入れた要素の値を返す
-    return emptyMessageInfoPlace - 1;
+    //天候情報の場合
+    if (settingInfoTypeNum >= 0 && settingInfoTypeNum <= 0){
+
+        weatherConditionInfoPosition++;
+        //表示する天候情報が何個あるかを返す
+        return weatherConditionInfoPosition;
+    }
+
+    //海上情報の場合
+    else if (settingInfoTypeNum >= 1 && settingInfoTypeNum <= 3){
+
+        marineConditionInfoPosition++;
+        return marineConditionInfoPosition;
+    }
 }

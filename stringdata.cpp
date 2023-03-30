@@ -6,7 +6,20 @@ StringData::StringData(){
 StringData::~StringData(){
 }
 
-QString StringData::getStringData(int listType, int stringType){
+void StringData::getNumString(int numType, QString &numString, QString &numObjectName){
 
-    return stringData[listType][stringType];
+    numString = numInfoList[numType].numString;
+    numObjectName = numInfoList[numType].numObjectName;
+}
+
+void StringData::getStringInfo(int stringType, QString &stringInfoString, QString &stringObjectName){
+
+    stringInfoString = stringInfoList[stringType].stringInfoString;
+    stringObjectName = stringInfoList[stringType].stringObjectName;
+}
+
+
+QString StringData::getDetailInfo(int detailInfoNum){
+
+    return detailInfoList[detailInfoNum];
 }
