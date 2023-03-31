@@ -26,11 +26,13 @@ public:
 
 signals:
     void onPropertyChangedSignal();
+    void updateScreenSignal();
 
 private slots:
 
 private:
-    QTimer *timer;
+    QTimer *readFileTimer;
+    QTimer *updateScreenTimer;
 
 };
 

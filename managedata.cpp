@@ -10,6 +10,10 @@ ManageData::~ManageData()
 {
 }
 
+int ManageData::getNumData(int numType){
+
+    return numData[numType];
+}
 
 void ManageData::setNumData(int settingNumData, int i){
 
@@ -70,4 +74,34 @@ int ManageData::setStringData(int settingInfoTypeNum, int settingInfoDetailNum, 
         marineConditionInfoPosition++;
         return marineConditionInfoPosition;
     }
+}
+
+bool ManageData::checkDataState(int numType){
+    //DirectionDegreeNumの場合
+    if (numType == 4){
+        if (numData[4] != numData[2])
+            return true;
+        else
+            return false;
+    }
+}
+
+int ManageData::updateCurrentDirectionDegreeNum(){
+
+    //時計回りか反時計回りかを判断
+    if( (numData[4] > numData[2]) && ((numData[4]-numData[2]) < 180) )
+        numData[4]--;
+    else if( (numData[4] < numData[2]) && ((numData[2]-numData[4]) > 180) )
+        numData[4]--;
+    else
+        numData[4]++;
+
+    if (numData[4] > 359){
+        numData[4] -= 360;
+    }
+    else if (numData[4] < 0){
+        numData[4] += 360;
+    }
+
+    return numData[4];
 }

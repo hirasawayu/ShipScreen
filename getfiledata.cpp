@@ -3,14 +3,23 @@
 //コンストラクタ
 GetFileData::GetFileData()
 {
-    //タイマーを設定
-    timer = new QTimer;
-    //1秒ごとにreadFileを呼び出す
-    connect(timer, &QTimer::timeout, [this]()
+    //ファイル読み込み用のタイマーを設定
+    readFileTimer = new QTimer;
+    //30秒ごとにonPropertyChangedSlotを呼び出す
+    connect(readFileTimer, &QTimer::timeout, [this]()
     {
         emit onPropertyChangedSignal();
     });
-    timer->start(1000);
+    readFileTimer->start(3000);
+
+    //画面更新用のタイマーを設定
+    updateScreenTimer = new QTimer;
+    //0.5秒ごとにreloadScreenSlotを呼び出す
+    connect(updateScreenTimer, &QTimer::timeout, [this](){
+        emit updateScreenSignal();
+    });
+    updateScreenTimer->start(200);
+
 }
 
 //デストラクタ
@@ -26,7 +35,7 @@ bool GetFileData::readFile(QList<QString> &getData, int &loop){
         QString errStr = "ファイル読み込みに失敗しました";
         qInfo() << errStr;
 
-        delete timer;
+        delete readFileTimer;
         return false;
     }
 
@@ -78,6 +87,6 @@ bool GetFileData::readFile(QList<QString> &getData, int &loop){
     }
     file.close();
 
-    delete timer;
+    delete readFileTimer;
     return false;
 }

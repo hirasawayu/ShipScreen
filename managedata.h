@@ -17,9 +17,12 @@ class ManageData : public QObject
 public:
     ManageData();
     ~ManageData();
+    int getNumData(int numType);
     void setNumData(int settingNumData, int i);
     //bool setNumData(int dataType, int numData, QString &objectName);
     int setStringData(int settingInfoTypeNum, int settingInfoDetailNum, int settingImportantInfoFlag);
+    bool checkDataState(int numType);
+    int updateCurrentDirectionDegreeNum();
 
 
 
@@ -31,7 +34,17 @@ private slots:
 private:
 
     //数値用の構造体
-    int numData[4] = {0};
+    int numData[5] = {0};
+
+    /*
+     * [0]speedNum
+     * [1]acDecelerationLevel
+     * [2]directionDegreeNum (set)
+     * [3]remainingFuelLevel
+     *
+     * //ファイルから入力しないデータ
+     * [n+1]currentDirectionDegreeNum
+     * */
 
     //現在時刻
     time_t currentTime;

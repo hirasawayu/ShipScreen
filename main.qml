@@ -324,12 +324,12 @@ Window {
                 anchors.bottomMargin: 20
 
                 Image {
-                                id: shipImage
-                                anchors.fill: parent
-                                width: 500; height: 500
-                                visible: true
-                                source: "shipImage.jpg"
-                                sourceSize.height: 400
+                    id: shipImage
+                    anchors.fill: parent
+                    width: 500; height: 500
+                    visible: true
+                    source: "shipImage.jpg"
+                    sourceSize.height: 400
                 }
             }
 
@@ -377,27 +377,103 @@ Window {
             }
 
             Shape {
+                id: shape
 
-                   ShapePath {
+                ShapePath {
 
-                       fillColor: "transparent"
-                       strokeColor: "blue"
+                    fillColor: "transparent"
+                    strokeColor: "blue"
 
-                       strokeWidth: 5
-
-
-                       startX: 120; startY: 250
-
-                       PathArc {
-
-                           x: 780; y: 250
-
-                           radiusX: 450; radiusY: 250
+                    strokeWidth: 5
 
 
+                    startX: 120; startY: 250
 
-                       }
-                   }
+                    PathArc {
+
+                        x: 780; y: 250
+
+                        radiusX: 450; radiusY: 250
+
+
+
+                    }
+                }
+            }
+
+
+            Text {
+                id: currentDirectionText2
+                objectName: "currentDirectionText2"
+                width: 30
+                height: 30
+                text: "-"
+                anchors.top: parent.top
+                font.pixelSize: 30
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 190
+
+                Text {
+                    id: currentDirectionText3
+                    objectName: "currentDirectionText3"
+                    width: 30
+                    height: 30
+                    text: "-"
+                    anchors.left: currentDirectionText2.right
+                    anchors.top: parent.top
+                    font.pixelSize: 30
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 80
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: currentDirectionText4
+                    objectName: "currentDirectionText4"
+                    width: 30
+                    height: 30
+                    text: "-"
+                    anchors.left: currentDirectionText3.right
+                    anchors.top: currentDirectionText3.top
+                    font.pixelSize: 30
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 80
+                    anchors.topMargin: 15
+                }
+
+                Text {
+                    id: currentDirectionText1
+                    objectName: "currentDirectionText1"
+                    width: 30
+                    height: 30
+                    text: "-"
+                    anchors.right: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: 30
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 80
+                    anchors.topMargin: 10
+                }
+
+                Text {
+                    id: currentDirectionText0
+                    objectName: "currentDirectionText0"
+                    width: 30
+                    height: 30
+                    text: "-"
+                    anchors.right: currentDirectionText1.left
+                    anchors.top: currentDirectionText1.top
+                    font.pixelSize: 30
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.topMargin: 15
+                    anchors.rightMargin: 80
+                }
             }
 
 

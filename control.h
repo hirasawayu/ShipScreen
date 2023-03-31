@@ -22,7 +22,6 @@ public:
     Control();
     ~Control();
 
-    void controller();
     void show();
     void hide();
     void qmlSetProperty(QString objectName, QString data);
@@ -34,6 +33,7 @@ signals:
 
 private slots:
     void onPropertyChangedSlot();
+    void updateScreenSlot();
     void onClickedButtonSlot(int buttonNum);
 
 

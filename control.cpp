@@ -13,24 +13,20 @@ Control::Control()
     connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
 
-    //データ受け取り時のシグナルとスロットを結び付ける
+    //データ読み込み用のシグナルとスロットを結び付ける
     connect(&getFileData, &GetFileData::onPropertyChangedSignal, this, &Control::onPropertyChangedSlot);
+
+    //画面更新用のシグナルとスロットを結び付ける
+    connect(&getFileData, &GetFileData::updateScreenSignal, this, &Control::updateScreenSlot);
+
+    //初期表示
+    onPropertyChangedSlot();
 
 }
 
 //デストラクタ
 Control::~Control()
 {
-}
-
-//QMLファイルとの連携をセットアップ
-void Control::controller(){
-
-    /*
-    mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    // Windowポインタを取得
-    mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
-    */
 }
 
 void Control::show(){
@@ -103,6 +99,27 @@ void Control::onPropertyChangedSlot(){
     qmlSetProperty(stringObjectName, stringInfoString);
 
     addListData(stringInfoString);
+}
+
+//画面更新時のスロット
+void Control::updateScreenSlot(){
+
+    //currentDirectionDegreeNumの更新
+    bool updateFlag = manageData.checkDataState(4);
+
+    if(updateFlag == true){
+        int currentDirectionDegreeNum = manageData.updateCurrentDirectionDegreeNum();
+        qInfo() << currentDirectionDegreeNum;
+        //-20から+20の幅まで表示
+        currentDirectionDegreeNum -= 10;
+
+        for (int i = 0; i < 5; i++){
+            QString currentDirectionObjectName = "currentDirectionText" + QString::number(i);
+
+            qmlSetProperty(currentDirectionObjectName, QString::number(currentDirectionDegreeNum));
+            currentDirectionDegreeNum += 5;
+        }
+    }
 }
 
 //画面ボタン押下時のスロットを定義

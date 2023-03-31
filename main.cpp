@@ -24,8 +24,5 @@ int main(int argc, char *argv[])
    //control->moveToThread(controlThread);
    //controlThread->start();
 
-   control->controller();
-
-
     return app.exec();
 }
