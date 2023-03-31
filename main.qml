@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQml.Models
 import QtQuick.Controls 2.0
+import QtQuick.Shapes 1.4
+
 
 
 Window {
@@ -12,6 +14,9 @@ Window {
 
     //シグナルを宣言
     signal onClickedButtonSignal (int ButtonNum);
+
+    property alias speedNum: speedNumText.text
+    property alias directionDegreeNum: directionDegreeNumText.text
 
 
     Rectangle{
@@ -250,7 +255,7 @@ Window {
         //サブ画面１
         Rectangle {
             id: subScreen1
-            visible: true
+            visible: false
             color: "#ffffff"
             border.width: 0
             anchors.left: parent.left
@@ -322,8 +327,77 @@ Window {
                                 id: shipImage
                                 anchors.fill: parent
                                 width: 500; height: 500
+                                visible: true
                                 source: "shipImage.jpg"
-                            }
+                                sourceSize.height: 400
+                }
+            }
+
+            Text {
+                width: 200
+                height: 100
+                text: speedNum
+                anchors.bottom: rectangle2.top
+                font.pixelSize: 50
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottomMargin: 10
+            }
+
+            Text {
+                id: text2
+                width: 100
+                height: 40
+                text: qsTr("SET")
+                anchors.top: parent.top
+                font.letterSpacing: 1
+                font.pixelSize: 35
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.wordSpacing: 0
+                font.bold: true
+                anchors.topMargin: 30
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Text {
+                id: text3
+                width: 150
+                height: 80
+                text: directionDegreeNum
+                anchors.top: text2.bottom
+                font.pixelSize: 50
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                anchors.topMargin: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Shape {
+
+                   ShapePath {
+
+                       fillColor: "transparent"
+                       strokeColor: "blue"
+
+                       strokeWidth: 5
+
+
+                       startX: 120; startY: 250
+
+                       PathArc {
+
+                           x: 780; y: 250
+
+                           radiusX: 450; radiusY: 250
+
+
+
+                       }
+                   }
             }
 
 
@@ -739,6 +813,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}D{i:17;invisible:true}
+    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}D{i:24}D{i:25}
 }
 ##^##*/
