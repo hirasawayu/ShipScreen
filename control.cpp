@@ -106,9 +106,11 @@ void Control::updateScreenSlot(){
 
     //currentDirectionDegreeNumの更新
     bool updateFlag = manageData.checkDataState(4);
+    bool directionChangeFlag = false;
 
     if(updateFlag == true){
-        int currentDirectionDegreeNum = manageData.updateCurrentDirectionDegreeNum();
+
+        int currentDirectionDegreeNum = manageData.updateCurrentDirectionDegreeNum(directionChangeFlag);
         qInfo() << currentDirectionDegreeNum;
         //-20から+20の幅まで表示
         currentDirectionDegreeNum -= 10;
@@ -120,6 +122,8 @@ void Control::updateScreenSlot(){
             currentDirectionDegreeNum += 5;
         }
     }
+
+
 }
 
 //画面ボタン押下時のスロットを定義
@@ -148,7 +152,15 @@ void Control::onClickedButtonSlot(int buttonNum){
 
 //画面状態切替処理
 void Control::switchScreenQml(QString stateType){
-    QObject *rootObject = mainEngine.rootObjects().first();
+
     QObject *qmlObject = rootObject->findChild<QObject*>("obWindow");
     qmlObject->setProperty("state" , stateType);
+}
+
+void Control::onDirectionChange(bool updateFlag, bool directionChangeFlag){
+
+    if (updateFlag == false){
+
+    }
+
 }

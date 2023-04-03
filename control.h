@@ -27,6 +27,7 @@ public:
     void qmlSetProperty(QString objectName, QString data);
     void addListData(QString stringInfooString);
     void switchScreenQml(QString stateType);
+    void onDirectionChange(bool updateFlag, bool directionChangeFlag);
 
 signals:
 

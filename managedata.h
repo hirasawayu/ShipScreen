@@ -22,7 +22,7 @@ public:
     //bool setNumData(int dataType, int numData, QString &objectName);
     int setStringData(int settingInfoTypeNum, int settingInfoDetailNum, int settingImportantInfoFlag);
     bool checkDataState(int numType);
-    int updateCurrentDirectionDegreeNum();
+    int updateCurrentDirectionDegreeNum(bool &directionChangeFlag);
 
 
 

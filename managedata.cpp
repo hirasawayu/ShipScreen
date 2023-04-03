@@ -86,15 +86,21 @@ bool ManageData::checkDataState(int numType){
     }
 }
 
-int ManageData::updateCurrentDirectionDegreeNum(){
+int ManageData::updateCurrentDirectionDegreeNum(bool &directionChangeFlag){
 
     //時計回りか反時計回りかを判断
-    if( (numData[4] > numData[2]) && ((numData[4]-numData[2]) < 180) )
+    if( (numData[4] > numData[2]) && ((numData[4]-numData[2]) < 180) ){
         numData[4]--;
-    else if( (numData[4] < numData[2]) && ((numData[2]-numData[4]) > 180) )
+        directionChangeFlag = false;
+    }
+    else if( (numData[4] < numData[2]) && ((numData[2]-numData[4]) > 180) ){
         numData[4]--;
-    else
+        directionChangeFlag = false;
+    }
+    else {
         numData[4]++;
+        directionChangeFlag = true;
+    }
 
     if (numData[4] > 359){
         numData[4] -= 360;

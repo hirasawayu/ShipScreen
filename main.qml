@@ -476,6 +476,55 @@ Window {
                 }
             }
 
+            Shape {
+                id: leftArrowSign
+                objectName: "leftArrowSign"
+                visible: false
+                width: 150
+                height: 150
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: 180
+                anchors.topMargin: 400
+                ShapePath{
+                    strokeWidth: 5
+                    strokeColor: "red"
+                    fillColor: "red"
+                    startX: 0; startY: 50
+                    PathLine{x: 50; y: 0}
+                    PathLine{x: 50; y: 30}
+                    PathLine{x: 100; y: 30}
+                    PathLine{x: 100; y: 70}
+                    PathLine{x: 50; y: 70}
+                    PathLine{x: 50; y: 100}
+                    PathLine{x: 0; y: 50}
+                }
+            }
+
+            Shape {
+                id: rightArrowSign
+                objectName: "rightArrowSign"
+                visible: false
+                width: 150
+                height: 150
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: 730
+                anchors.topMargin: 400
+                ShapePath{
+                    strokeWidth: 5
+                    strokeColor: "green"
+                    fillColor: "green"
+                    startX: 0; startY: 50
+                    PathLine{x: -50; y: 0}
+                    PathLine{x: -50; y: 30}
+                    PathLine{x: -100; y: 30}
+                    PathLine{x: -100; y: 70}
+                    PathLine{x: -50; y: 70}
+                    PathLine{x: -50; y: 100}
+                    PathLine{x: 0; y: 50}
+                }
+            }
 
         }
 
@@ -889,6 +938,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}D{i:24}D{i:25}
+    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}
 }
 ##^##*/
