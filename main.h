@@ -6,12 +6,10 @@
 #include <QObject>
 #include <QCoreApplication>
 #include <QDebug>
-#include <iostream>
 #include <QtQuick/QQuickView>
-#include <QQmlApplicationEngine>
-#include <QQuickWindow>
 #include <QGuiApplication>
 #include <QThread>
+#include <QTranslator>
 
 #include "control.h"
 #include "getfiledata.h"

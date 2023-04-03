@@ -59,7 +59,7 @@ Window {
 
 
                 Text {
-                    text: "サブ画面１"
+                    text: qsTr("サブ画面１")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -106,7 +106,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
-                    text: "サブ画面２"
+                    text: qsTr("サブ画面２")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -154,7 +154,7 @@ Window {
                 anchors.topMargin: 0
 
                 Text {
-                    text: "サブ画面３"
+                    text: qsTr("サブ画面３")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -248,6 +248,29 @@ Window {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.leftMargin: 0
+                }
+            }
+
+            Rectangle {
+                id: helpChangeButton
+                width: 80
+                height: 80
+                radius: width * 0.5
+                border.color: "#ee0000"
+                color: "#e70000"
+                border.width: 2
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.topMargin: 450
+                anchors.leftMargin: 800
+
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        onClickedHelpChangeButtonSignal();
+
+                    }
                 }
             }
         }
@@ -894,6 +917,32 @@ Window {
 
                 }
             }
+
+            Rectangle {
+                id: rectangle1
+                width: 700
+                height: 200
+                color: "#ffffff"
+                radius: 10
+                border.width: 5
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.topMargin: 100
+                anchors.leftMargin: 50
+
+                Text {
+                    id: helpText
+                    visible: true
+                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt;\">各画面について</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">1. 走行情報画面：走行情報の詳細表示、および残燃料を表示する</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">2. 天候・海上情報画面：各時間帯の天候情報、海上情報（波浪警報、事故警報）を表示する</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">3. ヘルプ画面：ユーザーガイドを表示する</span></p></body></html>"
+                    anchors.fill: parent
+                    font.pixelSize: 30
+                    horizontalAlignment: Text.AlignLeft
+                    anchors.rightMargin: 0
+                    textFormat: Text.RichText
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 5
+                }
+            }
         }
 
         //画面状態切替
@@ -938,6 +987,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:2;invisible:true}D{i:21;invisible:true}
+    D{i:0}D{i:23;invisible:true}
 }
 ##^##*/

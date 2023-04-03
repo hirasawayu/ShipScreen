@@ -9,20 +9,12 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-   //TODO ファイル読み込みと画面表示をマルチスレッドで行いたい
-    /*
-   Control *initialControl = new Control;
-   QThread *initialThread = new QThread;
-   initialControl->moveToThread(initialThread);
-   initialThread->start();
-
-   initialControl->initialSetup();
-   */
+    //多言語化
+    QTranslator translator;
+    translator.load("hellotr_la");
+    app.installTranslator(&translator);
 
    Control *control = new Control;
-   //QThread *controlThread = new QThread;
-   //control->moveToThread(controlThread);
-   //controlThread->start();
 
     return app.exec();
 }

@@ -37,18 +37,11 @@ void Control::hide(){
     mainWindow->hide();
 }
 
-void Control::qmlSetProperty(QString objectName, QString data){
+void Control::qmlSetProperty(QString objectName, const char *propertyName, QString data){
 
     //QmlオブジェクトのTextプロパティを更新
     QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
-    qmlObject->setProperty("text", data);
-
-}
-
-void Control::addListData(QString listData){
-
-    QObject *qmlObject = rootObject->findChild<QObject*>("infoModel");
-    qmlObject->setProperty("listDataString", listData);
+    qmlObject->setProperty(propertyName, data);
 
 }
 
@@ -64,9 +57,9 @@ void Control::onPropertyChangedSlot(){
         return;
     }
 
+    //数値データを更新する
     for (count = 0; count < 4; count++){
 
-        //
         QString numString;
         QString numObjectName;
 
@@ -75,7 +68,7 @@ void Control::onPropertyChangedSlot(){
 
         numString = getData[count] + numString;
 
-        qmlSetProperty(numObjectName, numString);
+        qmlSetProperty(numObjectName, "text", numString);
 
 
         //画面表示
@@ -96,9 +89,10 @@ void Control::onPropertyChangedSlot(){
     //例：　"weatherConditionInfoText" + "1"
     stringObjectName = stringObjectName + QString::number(infoPosition);
     stringInfoString = stringInfoString + detailInfoString;
-    qmlSetProperty(stringObjectName, stringInfoString);
+    qmlSetProperty(stringObjectName, "text", stringInfoString);
 
-    addListData(stringInfoString);
+    //ListViewに表示
+    qmlSetProperty("infoModel", "listDataString", stringInfoString);
 }
 
 //画面更新時のスロット
@@ -118,10 +112,12 @@ void Control::updateScreenSlot(){
         for (int i = 0; i < 5; i++){
             QString currentDirectionObjectName = "currentDirectionText" + QString::number(i);
 
-            qmlSetProperty(currentDirectionObjectName, QString::number(currentDirectionDegreeNum));
+            qmlSetProperty(currentDirectionObjectName, "text", QString::number(currentDirectionDegreeNum));
             currentDirectionDegreeNum += 5;
         }
     }
+
+    onDirectionChange(updateFlag, directionChangeFlag);
 
 
 }
@@ -159,8 +155,19 @@ void Control::switchScreenQml(QString stateType){
 
 void Control::onDirectionChange(bool updateFlag, bool directionChangeFlag){
 
-    if (updateFlag == false){
+    //進行方向変更の矢印を非表示にする
+    qmlSetProperty("rightArrowSign", "visible", "false");
+    qmlSetProperty("leftArrowSign", "visible", "false");
 
+    if (updateFlag == true){
+        //左方向の矢印を表示する
+        if (directionChangeFlag == false){
+            qmlSetProperty("leftArrowSign", "visible", "true");
+        }
+
+        //右方向の矢印を表示する
+        if (directionChangeFlag == true){
+            qmlSetProperty("rightArrowSign", "visible", "true");
+        }
     }
-
 }

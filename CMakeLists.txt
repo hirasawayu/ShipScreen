@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
 set(PROJECT_SOURCES
@@ -27,6 +28,11 @@ set(PROJECT_SOURCES
         file.txt
         shipImage.jpg
 )
+
+qt6_add_translation(hellotr
+    TS_FILES hellotr_la.ts
+    QM_FILES_OUTPUT_VARIABLE qm_files)
+install(FILES ${qm_files} DESTINATION ${SHIPSCREEN})
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ShipScreen
