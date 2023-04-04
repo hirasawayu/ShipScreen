@@ -27,12 +27,14 @@ set(PROJECT_SOURCES
         qml.qrc
         file.txt
         shipImage.jpg
+        shipscreen_en.ts
 )
 
 qt6_add_translation(hellotr
     TS_FILES hellotr_la.ts
     QM_FILES_OUTPUT_VARIABLE qm_files)
 install(FILES ${qm_files} DESTINATION ${SHIPSCREEN})
+qt6_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} shipscreen_en.ts)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ShipScreen

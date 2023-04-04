@@ -11,7 +11,13 @@ int main(int argc, char *argv[])
 
     //多言語化
     QTranslator translator;
-    translator.load("hellotr_la");
+    bool check = translator.load(":/shipscreen_en.qm");
+    if(check == true){
+        qInfo() << "SUCCEED";
+    }
+
+    else
+        qInfo() << "FALSE";
     app.installTranslator(&translator);
 
    Control *control = new Control;

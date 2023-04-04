@@ -1,8 +1,8 @@
 #include "control.h"
 
 //コンストラクタ
-Control::Control()
-{ 
+Control::Control(){
+
     mainEngine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     //Windowポインタを取得
     mainWindow = dynamic_cast<QQuickWindow*>(mainEngine.rootObjects().first());
