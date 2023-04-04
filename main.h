@@ -9,7 +9,6 @@
 #include <QtQuick/QQuickView>
 #include <QGuiApplication>
 #include <QThread>
-#include <QTranslator>
 
 #include "control.h"
 #include "getfiledata.h"

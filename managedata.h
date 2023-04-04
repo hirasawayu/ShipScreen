@@ -14,6 +14,7 @@
 
 class ManageData : public QObject
 {
+    Q_OBJECT
 public:
     ManageData();
     ~ManageData();

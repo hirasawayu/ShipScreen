@@ -10,6 +10,7 @@
 #include <QQuickWindow>
 #include <QGuiApplication>
 #include <QThread>
+#include <QTranslator>
 
 #include "getfiledata.h"
 #include "managedata.h"
@@ -35,7 +36,7 @@ private slots:
     void onPropertyChangedSlot();
     void updateScreenSlot();
     void onClickedButtonSlot(int buttonNum);
-
+    void onClickedHelpButtonSlot(int buttonState);
 
 private:
     QQmlApplicationEngine mainEngine;

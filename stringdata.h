@@ -6,6 +6,8 @@
 
 class StringData : public QObject
 {
+    Q_OBJECT
+
 public:
     StringData();
     ~StringData();
@@ -35,17 +37,17 @@ private:
     };
 
     StringInfoList stringInfoList[4] = {
-        {"天候情報: ", "showWeatherConditionInfoText"},
-        {"台風警報: ", "showMarineConditionInfoText"},
-        {"波浪警報: ", "showMarineConditionInfoText"},
-        {"海上事故警報: ", "showMarineConditionInfoText"}
+        {tr("Weather Info: "), "showWeatherConditionInfoText"},
+        {tr("Typhoon Alert: "), "showMarineConditionInfoText"},
+        {tr("Tidal Wave Alert: "), "showMarineConditionInfoText"},
+        {tr("Accident Alert: "), "showMarineConditionInfoText"}
     };
 
     QList<QString> detailInfoList = {
-        "晴れのち曇り/降水確率２０％",
-        "午後６時頃から台風接近による強風・高波が見込まれます。",
-        "東京湾沖にて１０ｍの高波が発生しています。",
-        "付近の海上にて船舶事故が発生。注意して進行してください。"
+        tr("sunny to cloudyl/20% chance of rain"),
+        tr("Strong wind and tidal wave are predicted from 6 p.m. due to incoming typhoon."),
+        tr("Over 10-meter tidal wave are observed along the Tokyo Bay."),
+        tr("Be Aware of a marine accident occured around this area.")
     };
 };
 

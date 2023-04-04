@@ -13,6 +13,10 @@ Control::Control(){
     connect(mainWindow, SIGNAL(onClickedButtonSignal(int)),
             this, SLOT(onClickedButtonSlot(int)));
 
+    //ヘルプボタン押下時のシグナルとスロット
+    connect(mainWindow, SIGNAL(onClickedHelpButtonSignal(int)),
+            this, SLOT(onClickedHelpButtonSlot(int)));
+
     //データ読み込み用のシグナルとスロットを結び付ける
     connect(&getFileData, &GetFileData::onPropertyChangedSignal, this, &Control::onPropertyChangedSlot);
 
@@ -21,7 +25,6 @@ Control::Control(){
 
     //初期表示
     onPropertyChangedSlot();
-
 }
 
 //デストラクタ
@@ -69,10 +72,6 @@ void Control::onPropertyChangedSlot(){
         numString = getData[count] + numString;
 
         qmlSetProperty(numObjectName, "text", numString);
-
-
-        //画面表示
-        show();
     }
 
     QString stringInfoString;
@@ -169,5 +168,21 @@ void Control::onDirectionChange(bool updateFlag, bool directionChangeFlag){
         if (directionChangeFlag == true){
             qmlSetProperty("rightArrowSign", "visible", "true");
         }
+    }
+}
+
+void Control::onClickedHelpButtonSlot(int buttonState){
+    if (buttonState == 0) {
+        qmlSetProperty("helpButtonMA", "buttonState", "1");
+        qmlSetProperty("helpButton", "color", "green");
+        qmlSetProperty("infoList", "visible", "true");
+        qmlSetProperty("helpRec", "visible", "true");
+    }
+
+    else if (buttonState == 1) {
+        qmlSetProperty("helpButtonMA", "buttonState", "0");
+        qmlSetProperty("helpButton", "color", "red");
+        qmlSetProperty("infoList", "visible", "false");
+        qmlSetProperty("helpRec", "visible", "false");
     }
 }

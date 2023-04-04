@@ -14,6 +14,7 @@ Window {
 
     //シグナルを宣言
     signal onClickedButtonSignal (int ButtonNum);
+    signal onClickedHelpButtonSignal(int buttonState);
 
     property alias speedNum: speedNumText.text
     property alias directionDegreeNum: directionDegreeNumText.text
@@ -59,7 +60,7 @@ Window {
 
 
                 Text {
-                    text: qsTr("サブ画面１")
+                    text: qsTr("Sub Screen 1")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -106,7 +107,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
-                    text: qsTr("サブ画面２")
+                    text: qsTr("Sub Screen 2")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -154,7 +155,7 @@ Window {
                 anchors.topMargin: 0
 
                 Text {
-                    text: qsTr("サブ画面３")
+                    text: qsTr("Sub Screen 3")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -252,12 +253,12 @@ Window {
             }
 
             Rectangle {
-                id: helpChangeButton
+                id: helpButton
+                objectName: "helpButton"
                 width: 80
                 height: 80
                 radius: width * 0.5
-                border.color: "#ee0000"
-                color: "#e70000"
+                color: "red"
                 border.width: 2
                 anchors.left: parent.left
                 anchors.top: parent.top
@@ -265,10 +266,13 @@ Window {
                 anchors.leftMargin: 800
 
                 MouseArea {
-                    id: mouseArea
+                    property int buttonState: 0
+                    id: helpButtonMA
+                    objectName: "helpButtonMA"
                     anchors.fill: parent
                     onClicked: {
-                        onClickedHelpChangeButtonSignal();
+                        onClickedHelpButtonSignal(buttonState);
+                        console.log("Catch")
 
                     }
                 }
@@ -304,7 +308,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: qsTr("← 戻る")
+                    text: qsTr("← Back")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -373,6 +377,7 @@ Window {
                 id: text2
                 width: 100
                 height: 40
+                visible: false
                 text: qsTr("SET")
                 anchors.top: parent.top
                 font.letterSpacing: 1
@@ -579,7 +584,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: qsTr("← 戻る")
+                    text: qsTr("← Back")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -629,7 +634,7 @@ Window {
                     width: 200
                     height: 30
                     color: "#0008ff"
-                    text: qsTr("～天候情報～")
+                    text: qsTr("～Weather Info～")
                     anchors.left: parent.left
                     anchors.top: parent.top
                     font.pixelSize: 25
@@ -645,7 +650,7 @@ Window {
                     id: showWeatherConditionInfoText1
                     objectName: "showWeatherConditionInfoText1"
                     height: 30
-                    text: qsTr("現在情報はありません。")
+                    text: qsTr("No available Infomation.")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -719,8 +724,9 @@ Window {
                 Text {
                     width: 200
                     height: 30
+                    visible: true
                     color: "#0008ff"
-                    text: qsTr("～海上情報～")
+                    text: qsTr("～Marine Info～")
                     anchors.left: parent.left
                     anchors.top: parent.top
                     font.pixelSize: 25
@@ -736,7 +742,7 @@ Window {
                     id: showMarineConditionInfoText1
                     objectName: "showMarineConditionInfoText1"
                     height: 30
-                    text: qsTr("現在情報はありません。")
+                    text: qsTr("No available Infomation.")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -797,7 +803,7 @@ Window {
                 id: text1
                 height: 60
                 color: "#0008ff"
-                text: qsTr("天候・海上情報")
+                text: qsTr("Weather/Marine Info")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -841,7 +847,7 @@ Window {
                 anchors.topMargin: 20
 
                 Text {
-                    text: qsTr("← 戻る")
+                    text: qsTr("← Back")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -875,7 +881,9 @@ Window {
             }
 
             Rectangle {
-                id: rectangle
+                id: infoList
+                objectName: "infoList"
+                visible: false
                 width: 500
                 height: 200
                 color: "#ffffff"
@@ -919,7 +927,9 @@ Window {
             }
 
             Rectangle {
-                id: rectangle1
+                id: helpRec
+                objectName: "helpRec"
+                visible: false
                 width: 700
                 height: 200
                 color: "#ffffff"
@@ -932,7 +942,6 @@ Window {
 
                 Text {
                     id: helpText
-                    visible: true
                     text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\nhr { height: 1px; border-width: 0; }\nli.unchecked::marker { content: \"\\2610\"; }\nli.checked::marker { content: \"\\2612\"; }\n</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt;\">各画面について</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">1. 走行情報画面：走行情報の詳細表示、および残燃料を表示する</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">2. 天候・海上情報画面：各時間帯の天候情報、海上情報（波浪警報、事故警報）を表示する</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">3. ヘルプ画面：ユーザーガイドを表示する</span></p></body></html>"
                     anchors.fill: parent
                     font.pixelSize: 30
@@ -987,6 +996,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:23;invisible:true}
+    D{i:0}D{i:2;invisible:true}
 }
 ##^##*/

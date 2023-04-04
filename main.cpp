@@ -11,16 +11,12 @@ int main(int argc, char *argv[])
 
     //多言語化
     QTranslator translator;
-    bool check = translator.load(":/shipscreen_en.qm");
-    if(check == true){
-        qInfo() << "SUCCEED";
-    }
-
-    else
-        qInfo() << "FALSE";
+    translator.load(":/shipscreen_jp.qm");
     app.installTranslator(&translator);
 
-   Control *control = new Control;
+   Control control;
+
+   control.show();
 
     return app.exec();
 }
