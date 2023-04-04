@@ -27,6 +27,7 @@ set(PROJECT_SOURCES
         qml.qrc
         file.txt
         shipImage.jpg
+        shipscreen_jp.ts
 )
 
 qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} shipscreen_jp.ts)
